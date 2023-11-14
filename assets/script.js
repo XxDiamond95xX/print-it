@@ -19,7 +19,7 @@ const slides = [
 
 const left = document.querySelector(`.arrow_left`);
 const right = document.querySelector(`.arrow_right`);
-const dots = document.querySelector(`.dot`);
+const dots = document.querySelectorAll(`.dot`);
 const bannerImg = document.querySelector(`.banner-img`);
 
 
@@ -31,6 +31,9 @@ right.addEventListener("click", function() {
 	console.log("clic sur fleche de droite")
 });
 
-let position = 0;
+let position = slides [0];
+
+
+
 
 
