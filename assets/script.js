@@ -20,19 +20,49 @@ const slides = [
 
 // constante lié a la bannière, aux flèches et aux points 
 const bannerImg = document.querySelector('.banner-img')
-const arrowLeft = document.querySelector('.arrow_left')
-const arrowRight = document.querySelector('.arrow_right')
+const Left = document.querySelector('.arrow_left')
+const Right = document.querySelector('.arrow_right')
 const dots = document.querySelectorAll('.dot') 
 
-// constante lié à l'image
-const imgSlide = `assets/images/slideshow/${slides[currentIndex].jpg}`
-bannerImg.src = imgSlide
-bannerImg.alt = `slide ${currentIndex + 1} `
-
-// constante lié a la tagLine
-const tagLine = slides[currentIndex].tagLine
-document.querySelector('p').innerHTML = tagLine
-
-// Paramètre de démarrage de l'index
 let currentIndex = 0
 
+Right.addEventListener ("click" , function() {
+    currentIndex = (currentIndex + 1) ;
+    Carousel(currentIndex, 'right');
+    dotsUpdate(currentIndex);
+    console.log("right")
+}); 
+
+Left.addEventListener ("click" , function() {
+    currentIndex = (currentIndex - 1);
+    Carousel(currentIndex, 'left');
+    dotsUpdate (currentIndex);
+    console.log("left")
+}); 
+
+// gestion des points 
+function dotsUpdate (index) {dots.forEach((dot, i) => {
+    if (i === index) {
+        dot.classList.add('dot_selected') 
+    } else {
+        dot.classList.remove('dot_selected') 
+    }
+})}
+
+// gestion du carroussel
+function Carousel(index) {
+     if (currentIndex === 4 ) {
+       currentIndex = 0;}
+     else if (currentIndex === -1 ) {
+       currentIndex = 3;
+   }
+
+  // MaJ de l'image
+  const imgSlides = `assets/images/slideshow/${slides[currentIndex].image}`;
+  bannerImg.src = imgSlides;
+  bannerImg.alt = `Slide ${currentIndex + 1}`;
+
+  // MaJ de le texte
+  const tagLine = slides[currentIndex].tagLine;
+  document.querySelector('p').innerHTML = tagLine;
+}
