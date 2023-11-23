@@ -62,7 +62,7 @@ function Carousel(index) {
   bannerImg.src = imgSlides;
   bannerImg.alt = `Slide ${currentIndex + 1}`;
 
-  // MaJ de le texte
+  // MaJ du texte
   const tagLine = slides[currentIndex].tagLine;
   document.querySelector('p').innerHTML = tagLine;
 }
