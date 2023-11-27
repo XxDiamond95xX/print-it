@@ -20,49 +20,64 @@ const slides = [
 
 // constante lié a la bannière, aux flèches et aux points 
 const bannerImg = document.querySelector('.banner-img')
-const Left = document.querySelector('.arrow_left')
-const Right = document.querySelector('.arrow_right')
-const dots = document.querySelectorAll('.dot') 
+const left = document.querySelector('.arrow_left')
+const right = document.querySelector('.arrow_right') 
+const dots = document.createElement("div");
+dots.classList.add("dots")
+let banner = document.getElementById("banner")
+banner.appendChild(dots)
 
-let currentIndex = 0
+let currentIndex = 0 
 
-Right.addEventListener ("click" , function() {
-    currentIndex = (currentIndex + 1) ;
-    Carousel(currentIndex, 'right');
-    dotsUpdate(currentIndex);
-    console.log("right")
+right.addEventListener ("click" , function() {
+    currentIndex = currentIndex + 1;
+    Carousel();
 }); 
 
-Left.addEventListener ("click" , function() {
-    currentIndex = (currentIndex - 1);
-    Carousel(currentIndex, 'left');
-    dotsUpdate (currentIndex);
-    console.log("left")
+left.addEventListener ("click" , function() {
+    currentIndex = currentIndex - 1;
+    Carousel();
 }); 
 
-// gestion des points 
-function dotsUpdate (index) {dots.forEach((dot, i) => {
-    if (i === index) {
-        dot.classList.add('dot_selected') 
-    } else {
-        dot.classList.remove('dot_selected') 
+
+// Fonction pour mettre à jour les points indicateurs
+function updateDots() {
+    const allDots = document.querySelectorAll('.dots .dot');
+    allDots.forEach((dot, index) => {
+        if (index === currentIndex) {
+            dot.classList.add('dot_selected');
+        } else {
+            dot.classList.remove('dot_selected');
+        }
+    });
+}
+
+for ( i = 0; i < slides.length; i++){
+    const dot = document.createElement("div")
+    dot.classList.add("dot")
+    dots.appendChild(dot);  
+
+    if (currentIndex === i) {
+        dot.classList.add("dot_selected");
     }
-})}
+}
 
 // gestion du carroussel
-function Carousel(index) {
-     if (currentIndex === 4 ) {
-       currentIndex = 0;}
-     else if (currentIndex === -1 ) {
-       currentIndex = 3;
-   }
+function Carousel() {
+    if (currentIndex === slides.length) {
+       currentIndex = 0;
+    } else if (currentIndex === -1 ) {
+        currentIndex = slides.length -1;
+    }
+    
+    // MaJ de l'image
+    const imgSlides = `assets/images/slideshow/${slides[currentIndex].image}`;
+    bannerImg.src = imgSlides;
 
-  // MaJ de l'image
-  const imgSlides = `assets/images/slideshow/${slides[currentIndex].image}`;
-  bannerImg.src = imgSlides;
-  bannerImg.alt = `Slide ${currentIndex + 1}`;
+    // MaJ du texte
+    const tagLine = slides[currentIndex].tagLine;
+    document.querySelector('p').innerHTML = tagLine; 
 
-  // MaJ du texte
-  const tagLine = slides[currentIndex].tagLine;
-  document.querySelector('p').innerHTML = tagLine;
+    // Mettre à jour les points indicateurs
+      updateDots();
 }
