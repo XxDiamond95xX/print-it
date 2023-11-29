@@ -22,23 +22,46 @@ const slides = [
 const bannerImg = document.querySelector('.banner-img')
 const left = document.querySelector('.arrow_left')
 const right = document.querySelector('.arrow_right') 
-const dots = document.createElement("div");
-dots.classList.add("dots")
+const dots = document.querySelector('.dots') 
 let banner = document.getElementById("banner")
+const bannerTagline = document.querySelector("#banner p") 
+bannerTagline.classList.add("banner-tagline")
+
 banner.appendChild(dots)
 
 let currentIndex = 0 
 
+for ( i = 0; i < slides.length; i++){
+    const dot = document.createElement("div")
+    dot.classList.add("dot")
+    dots.appendChild(dot);  
+
+    if (currentIndex === i) {
+        dot.classList.add("dot_selected");
+    }
+}
+
 right.addEventListener ("click" , function() {
     currentIndex = currentIndex + 1;
-    Carousel();
-}); 
+    if (currentIndex === slides.length) {
+        currentIndex = 0; } 
+            // mettre a jour le carroussel
+            Carousel();
+            // Mettre à jour les points indicateurs
+            updateDots();
+    }
+); 
 
 left.addEventListener ("click" , function() {
     currentIndex = currentIndex - 1;
-    Carousel();
-}); 
-
+    if (currentIndex === -1 ) {
+        currentIndex = slides.length -1;}
+            // mettre a jour le carroussel
+            Carousel();
+            // Mettre à jour les points indicateurs
+            updateDots();
+    }
+); 
 
 // Fonction pour mettre à jour les points indicateurs
 function updateDots() {
@@ -52,23 +75,8 @@ function updateDots() {
     });
 }
 
-for ( i = 0; i < slides.length; i++){
-    const dot = document.createElement("div")
-    dot.classList.add("dot")
-    dots.appendChild(dot);  
-
-    if (currentIndex === i) {
-        dot.classList.add("dot_selected");
-    }
-}
-
 // gestion du carroussel
 function Carousel() {
-    if (currentIndex === slides.length) {
-       currentIndex = 0;
-    } else if (currentIndex === -1 ) {
-        currentIndex = slides.length -1;
-    }
     
     // MaJ de l'image
     const imgSlides = `assets/images/slideshow/${slides[currentIndex].image}`;
@@ -76,8 +84,6 @@ function Carousel() {
 
     // MaJ du texte
     const tagLine = slides[currentIndex].tagLine;
-    document.querySelector('p').innerHTML = tagLine; 
+    bannerTagline.innerHTML = tagLine; 
 
-    // Mettre à jour les points indicateurs
-      updateDots();
 }
