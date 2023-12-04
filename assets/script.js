@@ -20,17 +20,14 @@ const slides = [
 
 // constante lié a la bannière, aux flèches et aux points 
 const bannerImg = document.querySelector('.banner-img')
+const bannerTagline = document.querySelector(".banner-tagline") 
 const left = document.querySelector('.arrow_left')
 const right = document.querySelector('.arrow_right') 
 const dots = document.querySelector('.dots') 
-let banner = document.getElementById("banner")
-const bannerTagline = document.querySelector("#banner p") 
-bannerTagline.classList.add("banner-tagline")
-
-banner.appendChild(dots)
 
 let currentIndex = 0 
 
+// boucle de création des points 
 for ( i = 0; i < slides.length; i++){
     const dot = document.createElement("div")
     dot.classList.add("dot")
@@ -44,23 +41,25 @@ for ( i = 0; i < slides.length; i++){
 right.addEventListener ("click" , function() {
     currentIndex = currentIndex + 1;
     if (currentIndex === slides.length) {
-        currentIndex = 0; } 
-            // mettre a jour le carroussel
-            Carousel();
-            // Mettre à jour les points indicateurs
-            updateDots();
-    }
+        currentIndex = 0; 
+    } 
+    // mettre a jour le carroussel
+    updateCurrentSlide();
+    // Mettre à jour les points indicateurs
+    updateDots();
+}
 ); 
 
 left.addEventListener ("click" , function() {
     currentIndex = currentIndex - 1;
     if (currentIndex === -1 ) {
-        currentIndex = slides.length -1;}
-            // mettre a jour le carroussel
-            Carousel();
-            // Mettre à jour les points indicateurs
-            updateDots();
-    }
+        currentIndex = slides.length -1;
+    } 
+    // mettre a jour le carroussel
+    updateCurrentSlide();
+    // Mettre à jour les points indicateurs
+    updateDots();
+}
 ); 
 
 // Fonction pour mettre à jour les points indicateurs
@@ -76,7 +75,7 @@ function updateDots() {
 }
 
 // gestion du carroussel
-function Carousel() {
+function updateCurrentSlide() {
     
     // MaJ de l'image
     const imgSlides = `assets/images/slideshow/${slides[currentIndex].image}`;
